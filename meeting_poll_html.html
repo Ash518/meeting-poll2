@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weekly Meeting Schedule Poll</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(135deg, #EFF6FF 0%, #E0E7FF 100%);
+            min-height: 100vh;
+            padding: 2rem;
+        }
+        
+        .container {
+            max-width: 700px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+            padding: 3rem;
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        
+        h1 {
+            font-size: 2rem;
+            color: #1F2937;
+            margin-bottom: 0.5rem;
+        }
+        
+        .subtitle {
+            color: #6B7280;
+            font-size: 1rem;
+        }
+        
+        .section {
+            margin-bottom: 2rem;
+        }
+        
+        label {
+            display: block;
+            font-weight: 600;
+            color: #374151;
+            margin-bottom: 0.75rem;
+        }
+        
+        .helper-text {
+            font-weight: 400;
+            color: #9CA3AF;
+            font-size: 0.875rem;
+        }
+        
+        .option-button {
+            width: 100%;
+            padding: 1rem;
+            margin-bottom: 0.75rem;
+            border: 2px solid #D1D5DB;
+            border-radius: 8px;
+            background: white;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-size: 1rem;
+            text-align: left;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+        
+        .option-button:hover {
+            border-color: #9CA3AF;
+        }
+        
+        .option-button.selected {
+            border-color: #4F46E5;
+            background: #EEF2FF;
+            color: #4338CA;
+        }
+        
+        .icon {
+            width: 20px;
+            height: 20px;
+        }
+        
+        .submit-button {
+            width: 100%;
+            padding: 0.875rem;
+            background: #4F46E5;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        
+        .submit-button:hover:not(:disabled) {
+            background: #4338CA;
+        }
+        
+        .submit-button:disabled {
+            background: #9CA3AF;
+            cursor: not-allowed;
+        }
+        
+        .success-screen {
+            text-align: center;
+        }
+        
+        .success-icon {
+            width: 64px;
+            height: 64px;
+            background: #D1FAE5;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1rem;
+        }
+        
+        .success-icon svg {
+            width: 32px;
+            height: 32px;
+            color: #059669;
+        }
+        
+        .success-title {
+            font-size: 1.5rem;
+            color: #1F2937;
+            margin-bottom: 0.5rem;
+        }
+        
+        .success-message {
+            color: #6B7280;
+            margin-bottom: 1.5rem;
+        }
+        
+        .response-summary {
+            background: #F9FAFB;
+            border-radius: 8px;
+            padding: 1rem;
+            margin-bottom: 1.5rem;
+            text-align: left;
+        }
+        
+        .response-summary p {
+            color: #6B7280;
+            font-size: 0.875rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .response-summary strong {
+            color: #374151;
+        }
+        
+        .reset-button {
+            background: #4F46E5;
+            color: white;
+            padding: 0.5rem 1.5rem;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+        
+        .reset-button:hover {
+            background: #4338CA;
+        }
+        
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div id="pollForm">
+            <div class="header">
+                <h1>Weekly Meeting Schedule Poll</h1>
+                <p class="subtitle">Please select your availability for our weekly meeting</p>
+            </div>
+            
+            <div class="section">
+                <label>
+                    Which time works best for you? *
+                    <span class="helper-text">(Select all that work)</span>
+                </label>
+                <button class="option-button" data-time="Tuesday 2:00 PM - 2:30 PM" onclick="toggleTime(this)">
+                    <svg class="icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                    </svg>
+                    Tuesday 2:00 PM - 2:30 PM
+                </button>
+                <button class="option-button" data-time="Friday 2:00 PM - 2:30 PM" onclick="toggleTime(this)">
+                    <svg class="icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                    </svg>
+                    Friday 2:00 PM - 2:30 PM
+                </button>
+            </div>
+            
+            <div class="section">
+                <label>Meeting Format Preference *</label>
+                <button class="option-button" data-format="virtual" onclick="selectFormat(this)">
+                    <svg class="icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"></path>
+                    </svg>
+                    Virtual (Online)
+                </button>
+                <button class="option-button" data-format="in-person" onclick="selectFormat(this)">
+                    <svg class="icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                    </svg>
+                    In-Person
+                </button>
+            </div>
+            
+            <button class="submit-button" id="submitBtn" onclick="submitPoll()" disabled>
+                Submit Your Availability
+            </button>
+        </div>
+        
+        <div id="successScreen" class="success-screen hidden">
+            <div class="success-icon">
+                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                </svg>
+            </div>
+            <h2 class="success-title">Thank You!</h2>
+            <p class="success-message">Your availability has been recorded.</p>
+            <div class="response-summary" id="responseSummary"></div>
+            <button class="reset-button" onclick="resetPoll()">Submit Another Response</button>
+        </div>
+    </div>
+    
+    <script>
+        let selectedTimes = [];
+        let selectedFormat = '';
+        
+        function toggleTime(button) {
+            const time = button.getAttribute('data-time');
+            
+            if (button.classList.contains('selected')) {
+                button.classList.remove('selected');
+                selectedTimes = selectedTimes.filter(t => t !== time);
+            } else {
+                button.classList.add('selected');
+                selectedTimes.push(time);
+            }
+            
+            updateSubmitButton();
+        }
+        
+        function selectFormat(button) {
+            // Remove selected class from all format buttons
+            document.querySelectorAll('[data-format]').forEach(btn => {
+                btn.classList.remove('selected');
+            });
+            
+            // Add selected class to clicked button
+            button.classList.add('selected');
+            selectedFormat = button.getAttribute('data-format');
+            
+            updateSubmitButton();
+        }
+        
+        function updateSubmitButton() {
+            const submitBtn = document.getElementById('submitBtn');
+            submitBtn.disabled = !(selectedTimes.length > 0 && selectedFormat);
+        }
+        
+        function submitPoll() {
+            const formatLabel = selectedFormat === 'virtual' ? 'Virtual (Online)' : 'In-Person';
+            
+            const summaryHTML = `
+                <p style="font-weight: 600; margin-bottom: 0.5rem;">Your Response:</p>
+                <p><strong>Preferred Times:</strong> ${selectedTimes.join(', ')}</p>
+                <p><strong>Format:</strong> ${formatLabel}</p>
+            `;
+            
+            document.getElementById('responseSummary').innerHTML = summaryHTML;
+            document.getElementById('pollForm').classList.add('hidden');
+            document.getElementById('successScreen').classList.remove('hidden');
+            
+            // Here you could also send the data to a server
+            console.log('Poll Response:', { times: selectedTimes, format: selectedFormat });
+        }
+        
+        function resetPoll() {
+            selectedTimes = [];
+            selectedFormat = '';
+            
+            // Remove all selected classes
+            document.querySelectorAll('.option-button').forEach(btn => {
+                btn.classList.remove('selected');
+            });
+            
+            // Show form, hide success
+            document.getElementById('pollForm').classList.remove('hidden');
+            document.getElementById('successScreen').classList.add('hidden');
+            
+            updateSubmitButton();
+        }
+    </script>
+</body>
+</html>
